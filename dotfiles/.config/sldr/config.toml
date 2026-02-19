@@ -1,0 +1,15 @@
+[config]
+template_dir = "~/.config/sldr/templates"
+flavor_dir = "~/.config/sldr/flavors"
+default_flavor = "default"
+slidev_port = "3030"
+
+[presentations]
+slide_dir = "~/sldr/slides"
+output_dir = "~/sldr/presentations"
+skeleton_dir = "~/sldr/skeletons"
+
+[matching]
+resolution_order = ["anchor", "exact", "fuzzy", "index", "interactive"]
+threshold = 50.0
+max_suggestions = 6

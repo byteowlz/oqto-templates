@@ -1,0 +1,19 @@
+name = "default"
+display_name = "Default"
+description = "Clean, minimal default flavor"
+
+[colors]
+primary = "#3b82f6"
+secondary = "#6366f1"
+background = "#ffffff"
+text = "#1f2937"
+accent = "#f59e0b"
+code_background = "#f3f4f6"
+
+[typography]
+heading_font = "Inter, sans-serif"
+body_font = "Inter, sans-serif"
+code_font = "JetBrains Mono, monospace"
+base_size = "16px"
+
+[background]
