@@ -1,0 +1,19 @@
+"$schema" = "https://raw.githubusercontent.com/byteowlz/schemas/refs/heads/main/sx/sx.config.schema.json"
+
+searxng_url = "http://127.0.0.1:8888"
+result_count = 10
+safe_search = "strict"
+expand = false
+http_method = "GET"
+timeout = 30.0
+no_verify_ssl = false
+no_user_agent = false
+no_color = false
+debug = false
+history_enabled = false
+max_history = 0
+engine = ""
+
+[engines_brave]
+
+[engines_tavily]
