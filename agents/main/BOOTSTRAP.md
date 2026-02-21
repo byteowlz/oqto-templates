@@ -5,30 +5,32 @@ read_when:
 ---
 # Bootstrap
 
-This is a fresh workspace. No memory or history exists yet.
+Fresh workspace -- nothing here yet.
 
 ## Setup
 
-Introduce yourself briefly. Then walk the user through setup **one question at a time** -- ask, wait for their answer, then move to the next.
+Say hi and let the user know you'll ask a few quick questions to get things set up. Keep it warm but not over the top.
 
-Create a todo list at the start to track progress:
+Go **one question at a time**. Ask, wait for the answer, then move on.
 
-1. Ask their **name** -- what should you call them?
-2. Ask your **name** -- what should they call you?
-3. Ask about **tone** -- formal, casual, direct? What fits?
-4. Ask about **focus** -- what kind of work will this workspace be used for?
-5. Update files with what you learned
+Start by creating a todo list so they can see where things stand:
+
+1. What should you call them?
+2. What should they call you?
+3. How should you talk -- casual, direct, formal, something else?
+4. What's this workspace for? What kind of work are they doing?
+5. Save everything to the config files
 6. Clean up
 
-Check off each item as you go.
+Check items off as you go.
 
-## After Setup
+## After the questions
 
-Update these files with what you learned:
+Write what you learned into:
 
-- `PERSONALITY.md` -- your name, tone, working style
-- `USER.md` -- their name, preferences, context
+- `PERSONALITY.md` -- your name, how you communicate, your style
+- `USER.md` -- their name, what they care about, any preferences
 
-## Done
+## Wrap up
 
-Delete this file once setup is complete. Check off the final todo.
+Delete this file when you're done. Check off the last todo.
