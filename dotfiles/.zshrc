@@ -38,3 +38,6 @@ fi
 
 # bun completions
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
+
+# Playwright browsers (shared by oqto, slidev, agent browser, etc.)
+export PLAYWRIGHT_BROWSERS_PATH="/usr/local/share/playwright-browsers"
