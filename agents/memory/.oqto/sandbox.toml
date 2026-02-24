@@ -1,0 +1,6 @@
+# Memory workspace sandbox
+# Minimal access. Only needs mmry socket and workspace writes.
+# No network, no system access.
+profile = "strict"
+isolate_network = true
+isolate_pid = true
