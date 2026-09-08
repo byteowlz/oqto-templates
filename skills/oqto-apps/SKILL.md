@@ -40,7 +40,9 @@ manifest (`oqto-app/v0`, sandboxed-web, work-directory binding, KV grant),
 a minimal themed presentation (`src/app.ts` + `bundle/index.html`), and a
 package.json whose `@byteowlz/oqto-app-sdk` dependency resolves without
 network: `--sdk` wins, then `$OQTO_APP_SDK_PATH`, then the newest version
-directory under `$OQTO_APP_SDK_HOME`, then a version-pinned github fallback.
+directory under `$OQTO_APP_SDK_HOME`, then `$HOME/.local/share/oqto/app-sdk`
+(the store oqto-usermgr provisions on managed hosts — no env var needed),
+then a version-pinned github fallback.
 Then edit the generated `oqto-app.toml` to request the capabilities the App
 actually needs; remember every package change requires republish.
 
