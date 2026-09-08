@@ -69,9 +69,8 @@ Full contract and capability semantics: see [REFERENCE.md](REFERENCE.md).
 ```
 
 Live user/shared content belongs in the Instance's bound work-directory resource,
-not inside the immutable App package; keep only fixtures beside source. The resolver
-is specified in ADR-0038 but not implemented (`oqto-efbj`). Keep this provisional
-layout mechanical so migration is a move, not a rewrite.
+not inside the immutable App package; keep only fixtures beside source. Keep this
+provisional layout mechanical so migration is a move, not a rewrite.
 
 ## Hard rules
 
@@ -99,19 +98,41 @@ remain visible to agents, conflicts do not clobber data, and CLI/UI operations
 share parity. Also test watcher coalescing, missing grants, and disconnects. Then
 run the preview/screenshot loop at real viewports (1440×900, 390×844).
 
-## Boundary — do not fabricate
+## Runtime status — the runtime is LIVE (2026-09-07)
 
-The runtime side of ADR-0038 is **designed, not implemented**: filesystem
-discovery/resolver, Installation/Instance/binding records, live capability grants,
-the Gate, and OqtoUI iframe host. The SDK and Bridge protocol exist locally in
-`~/byteowlz/oqto-app-sdk`; the live adapters do not. If your task requires those,
-stop and say so — track against `oqto-efbj` / `oqto-xcgg` — instead of inventing loader code, grant APIs, or
-manifest fields the host will never read. When asked how the app gets "installed"
-today, the honest answer is: it doesn't; it runs standalone via the workbench and
-is structured for discovery.
+Do not assume Apps are mock-only. The ADR-0038 runtime is implemented and
+deployed (backend v0.5.0 at `127.0.0.1:8080` and on managed hosts):
+
+- **Discovery/resolver**: `~/byteowlz/oqto_refactor/backend/crates/oqto-apps`
+  scans `<workdir>/oqto-apps/<app-id>.oqtoapp/`, validates manifests, and
+  digests packages (bundle + operations + context) into immutable Definitions.
+- **Publication, Installations, Instances**: `backend/crates/oqto/src/apps` —
+  publish/republish supersedes in place; Instances carry permission decisions
+  and live capability grants enforced per call (the Gate, runner-mediated).
+- **Iframe host**: opaque `srcdoc` + MessagePort Bridge (protocol `oqto-app/v2`)
+  mounted in the AppShell today (`RuntimeOqtoAppFrame` + `apps/inline.rs`).
+- **Live proof**: Comfy Studio end-to-end (publish → approve → concurrent
+  generations → cancel → close/reopen recovery) — see `oqto-efbj.3`.
+
+The SDK repo intentionally contains **no host**; `@byteowlz/oqto-app-sdk/testing`
+is for offline unit tests only. Live verification is the real catalog (below).
+
+Genuinely still missing — do not fabricate these, point at the tracker:
+- OqtoUI compositor App host (Apps mount in the AppShell today): `oqto-gqgh.7`.
+- Bridge files capability v0.1 (versions, conditional write, stat/watch): `oqto-xcgg`.
+- Action Broker / host-owned context menus (invocation for headless packages): ADR-0045.
+
+## Live verification loop
+
+Place (or scaffold) the package under `<workdir>/oqto-apps/`, then in the running
+Oqto UI open **Apps → catalog**, publish, review and approve the access request,
+and exercise the granted capabilities against the real backend. Instance,
+grants, and file/operation calls are visible under `/api/apps/*`. Republish after
+every package change; the user re-approves only when the digest changes. Use the
+SDK mock host for offline unit tests, not as a substitute for the live loop.
 
 ## Open questions — ask, don't assume
 
 - Binding kind and capability set beyond the SDK's initial four (ADR-0038 lists more).
 - Whether the app needs a Sidecar (server-side execution — ADR-0027, gated).
-- Catalog/distribution mechanics (deferred in ADR-0027).
+- Catalog/distribution beyond the per-workspace catalog (deferred in ADR-0027; workspace catalog is live).
