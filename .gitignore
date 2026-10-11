@@ -238,3 +238,6 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 .ruff_cache/
+
+# Repo ledger lives in the central trx store; template seed ledgers stay tracked.
+/.trx/
