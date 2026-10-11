@@ -1,0 +1,50 @@
+/** Per-root record of the tokens this helper applied and what they replaced. */
+const owned = new WeakMap();
+/**
+ * Apply a host theme to an app root and to its document root.
+ *
+ * The theme must reach the whole app document (portals, shadow roots,
+ * teleported nodes), so tokens are declared at the document root too; the app
+ * root still gets the dataset and inline vars for direct access.
+ *
+ * Each call is a full snapshot, not a patch: a token applied by an earlier call
+ * and omitted by this one is withdrawn. Withdrawal restores the inline value the
+ * root had before this helper first set that token (or removes it when there
+ * was none), so app-owned custom properties are never cleared. Only `--`
+ * custom properties are applied; other names are ignored.
+ */
+export function applyOqtoTheme(element, theme) {
+    const root = element.ownerDocument?.documentElement;
+    if (root && root !== element)
+        applySnapshot(root, theme);
+    applySnapshot(element, theme);
+}
+function applySnapshot(element, theme) {
+    const style = element.style;
+    let applied = owned.get(element);
+    if (!applied) {
+        applied = new Map();
+        owned.set(element, applied);
+    }
+    const incoming = Object.entries(theme.tokens).filter(([name]) => name.startsWith("--"));
+    const names = new Set(incoming.map(([name]) => name));
+    for (const [name, prior] of applied) {
+        if (names.has(name))
+            continue;
+        if (prior.value === "")
+            style.removeProperty(name);
+        else
+            style.setProperty(name, prior.value, prior.priority);
+        applied.delete(name);
+    }
+    for (const [name, value] of incoming) {
+        if (!applied.has(name)) {
+            applied.set(name, {
+                value: style.getPropertyValue(name),
+                priority: style.getPropertyPriority(name),
+            });
+        }
+        style.setProperty(name, value);
+    }
+    element.dataset.oqtoColorScheme = theme.colorScheme;
+}
